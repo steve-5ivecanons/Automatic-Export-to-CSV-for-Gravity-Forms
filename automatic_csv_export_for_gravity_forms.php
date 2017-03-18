@@ -27,36 +27,24 @@ class GravityFormsAutomaticCSVExport {
 			add_action( 'admin_init', array($this, 'gforms_create_schedules' ) );
 
 			global $wpdb;
-
 			$forms = $wpdb->get_results( "SELECT form_id, display_meta FROM wp_rg_form_meta" );
 
 			foreach ( $forms as $form ) {
-
 				$form_id = $form->form_id;
-
 				$display_meta = $form->display_meta;
-
 				$decode = json_decode( $display_meta );
 
 				if ( $decode ){
-
 					$enabled = $decode->automatic_csv_export_for_gravity_forms->enabled;
-
 					if ( $enabled == 1 ) {
-
 						add_action( 'csv_export_' . $form_id , array( $this, 'gforms_automated_export' ) );
-
 					}
-
 				}
-
 			}
 
-
 		}
+
 	}
-
-
 
 
 	/**
@@ -204,13 +192,6 @@ class GravityFormsAutomaticCSVExport {
 		$baseurl = $upload_dir['baseurl'];
 
 		$path = $upload_dir['path'];
-
-		//$myfile = fopen( $path . "/form_" . $form_id . '_' . date('Y-m-d-giA') . ".csv", "w") or die("Unable to open file!");
-
-		 //fwrite($myfile, $baseurl);
-		// fclose($myfile);
-
-		// To-Do = add to media library
 
 		$server = $_SERVER['HTTP_HOST'];
 
