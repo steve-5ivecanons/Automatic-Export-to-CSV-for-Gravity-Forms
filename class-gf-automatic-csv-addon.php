@@ -6,10 +6,10 @@ class GFAutomaticCSVAddOn extends GFAddOn {
 
     protected $_version = GF_AUTOMATIC_CSV_VERSION;
     protected $_min_gravityforms_version = '2.0';
-    protected $_slug = 'gravityforms-automatic-csv-export';
-    protected $_path = 'gravityforms-automatic-csv-export/gravityforms-automatic-csv-export.php';
+    protected $_slug = 'automatic_csv_export_for_gravity_forms';
+    protected $_path = 'gravityforms_automatic_csv_export/automatic_csv_export_for_gravity_forms.php';
     protected $_full_path = __FILE__;
-    protected $_title = 'Gravity Forms Automatic CSV Export Add-On';
+    protected $_title = 'Automatic CSV Export for Gravity Forms Add-On';
     protected $_short_title = 'Automatic CSV Export';
 
     private static $_instance = null;
@@ -29,8 +29,6 @@ class GFAutomaticCSVAddOn extends GFAddOn {
 
     public function init_admin() {
         parent::init_admin();
-
-        
     }
 
     public function scripts() {
