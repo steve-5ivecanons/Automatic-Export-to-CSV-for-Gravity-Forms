@@ -27,7 +27,8 @@ class GravityFormsAutomaticCSVExport {
 			add_action( 'admin_init', array($this, 'gforms_create_schedules' ) );
 
 			global $wpdb;
-			$forms = $wpdb->get_results( "SELECT form_id, display_meta FROM wp_rg_form_meta" );
+			$prefix = $wpdb->prefix;
+			$forms = $wpdb->get_results( "SELECT form_id, display_meta FROM " . $prefix . "rg_form_meta" );
 
 			foreach ( $forms as $form ) {
 				$form_id = $form->form_id;
