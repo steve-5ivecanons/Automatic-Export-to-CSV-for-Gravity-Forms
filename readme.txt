@@ -31,7 +31,7 @@ d. Log in to your WordPress Admin. From the WordPress Admin area, click on "Plug
 
 == Configuration ==
 
-Once the plugin is installed and activated, you can enable an automated export for any of your forms. If you haven't created any forms in Gravity Forms yet, you'll want to star by creating at least one form.
+Once the plugin is installed and activated, you can enable an automated export for any of your forms. If you haven't created any forms in Gravity Forms yet, you'll want to start by creating at least one form.
 
 1. From the WordPress dashboard, click on "Forms"
 2. Find the form you want to set up an automated export for.
