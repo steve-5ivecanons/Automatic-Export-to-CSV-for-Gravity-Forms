@@ -156,7 +156,6 @@ class GFAutomaticCSVAddOn extends GFAddOn {
                         'name'              => 'email_address',
                         'tooltip'           => esc_html__( 'The csv will be sent to this email address', 'csvexport' ),
                         'class'             => 'medium',
-                        // 'feedback_callback' => array( $this, 'is_valid_setting' ),
                     ),
                 ),
             ),
