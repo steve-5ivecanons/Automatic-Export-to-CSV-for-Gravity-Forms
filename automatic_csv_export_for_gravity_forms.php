@@ -36,7 +36,7 @@ class GravityFormsAutomaticCSVExport {
 				$decode = json_decode( $display_meta );
 
 				if ( $decode ){
-					$enabled = $decode->automatic_csv_export_for_gravity_forms->enabled;
+					$enabled = isset( $decode->automatic_csv_export_for_gravity_forms ) ? $decode->automatic_csv_export_for_gravity_forms->enabled : 0;
 					if ( $enabled == 1 ) {
 						add_action( 'csv_export_' . $form_id , array( $this, 'gforms_automated_export' ) );
 					}
@@ -100,7 +100,7 @@ class GravityFormsAutomaticCSVExport {
 
 			$form_id = $form['id'];
 
-			$enabled = $form['automatic_csv_export_for_gravity_forms']['enabled'];
+			$enabled = isset( $form['automatic_csv_export_for_gravity_forms'] ) ? $form['automatic_csv_export_for_gravity_forms']['enabled'] : 0;
 
 			if ( $enabled == 1 ) {
 
@@ -204,6 +204,20 @@ class GravityFormsAutomaticCSVExport {
 		$headers[] = 'From: WordPress <wordpress@' . $server . '>';
 		//$headers[] = 'Bcc: bcc@yourdomain.com';
 		wp_mail( $email_address , 'Automatic Form Export', 'CSV export is attached to this message', $headers, $attachments);
+	}
+
+
+	/**
+		* Get GMT date
+		*
+		* @param String	$local_date Local date
+		* @return String $date GMT date
+	*/
+	public static function get_gmt_date( $local_date ) {
+		$local_timestamp = strtotime( $local_date );
+		$gmt_timestamp   = GFCommon::get_gmt_timestamp( $local_timestamp );
+		$date            = gmdate( 'Y-m-d H:i:s', $gmt_timestamp );
+		return $date;
 	}
 
 
