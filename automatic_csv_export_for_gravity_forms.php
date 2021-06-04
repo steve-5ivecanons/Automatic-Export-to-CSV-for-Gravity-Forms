@@ -146,6 +146,8 @@ class GravityFormsAutomaticCSVExport {
 		$form = GFAPI::get_form( $form_id ); // get form by ID
 		$search_criteria = array();
 
+        $format_export = $form['automatic_csv_export_for_gravity_forms']['format_export'];
+
 		if ( $form['automatic_csv_export_for_gravity_forms']['search_criteria'] == 'all' ) {
 			$search_criteria = array();
 		}
@@ -184,13 +186,13 @@ class GravityFormsAutomaticCSVExport {
 
 		}
 
+        // aditionnal field
         $_POST['export_field'][] = 'created_by';
         $_POST['export_field'][] = 'id';
         $_POST['export_field'][] = 'date_created';
         $_POST['export_field'][] = 'source_url';
         $_POST['export_field'][] = 'user_agent';
         $_POST['export_field'][] = 'ip';
-
 
 		$_POST['export_date_start'] = $search_criteria['start_date'];
 		$_POST['export_date_end']   = $search_criteria['end_date'];
@@ -213,7 +215,7 @@ class GravityFormsAutomaticCSVExport {
 
         $email_content = $form['automatic_csv_export_for_gravity_forms']['email_content'];
         if( $email_content ) {} else {
-            $email_content = 'CSV export is attached to this message';
+            $email_content = 'CSV export is attached to this message'."\n\r\n\r\n\r";
         }
 
 		// Send an email using the latest csv file
@@ -225,14 +227,21 @@ class GravityFormsAutomaticCSVExport {
         // si le fichier a bien ete cree
         if( file_exists($file_csv) && filesize($file_csv) > 0 ) {
 
-            $mail_attachment = array($file_csv,$file_xls);
+            if( isset($format_export) && $format_export == 'xls' ) {
+                $mail_attachment = array($file_xls);
+            } else {
+                $mail_attachment = array($file_csv);
+            }
 
             // https://developer.wordpress.org/reference/functions/get_option/
             $headers[] = 'From: '.get_option('blogname').' <'.get_option('admin_email').'>';
             wp_mail( $email_address , $email_subject, $email_content, $headers, $mail_attachment);
 
             unlink( $file_csv );
-            unlink( $file_xls );
+
+            if( isset($format_export) && $format_export == 'xls' ) {
+                unlink( $file_xls );
+            }
 
         }
 
@@ -257,6 +266,8 @@ class GravityFormsAutomaticCSVExport {
 
 		$time_start = microtime( true );
 
+		$format_export = $form['automatic_csv_export_for_gravity_forms']['format_export'];
+
         /***
 		 * Allows the export max execution time to be changed.
 		 *
@@ -279,15 +290,14 @@ class GravityFormsAutomaticCSVExport {
         $path = $upload_dir['path'];
 
         $file_name = "/export-" . $form_id . '-' . date('Y-m-d-giA') . ".csv";
-
         $file_path = trailingslashit( $path ) . $file_name;
 
-        $file_xls = trailingslashit( $path ) . "/export-" . $form_id . '-' . date('Y-m-d-giA') . ".xls";;
-
-        $excel = new ExcelWriter( $file_xls );
-
-        if ( $excel == false ) {
-            echo $excel->error;
+        if( isset($format_export) && $format_export == 'xls' ) {
+            $file_xls = trailingslashit( $path ) . "/export-" . $form_id . '-' . date('Y-m-d-giA') . ".xls";;
+            $excel = new ExcelWriter( $file_xls );
+            if ( $excel == false ) {
+                echo $excel->error;
+            }
         }
 
 		$start_date = empty( $_POST['export_date_start'] ) ? '' : self::get_gmt_date( $_POST['export_date_start'] . ' 00:00:00' );
@@ -361,8 +371,10 @@ class GravityFormsAutomaticCSVExport {
 
 		}
 
-        $excel->writeLine($headers);
-        $lines_xls = array();
+        if( isset($format_export) && $format_export == 'xls' ) {
+            $excel->writeLine($headers);
+            $lines_xls = array();
+        }
 
         // Paging through results for memory issues
 		while ( $remaining_entry_count > 0 ) {
@@ -446,12 +458,14 @@ class GravityFormsAutomaticCSVExport {
 
 				$lines = substr( $lines, 0, strlen( $lines ) - 1 );
 
-                // $row = explode($separator,str_replace( '""', '', $lines));
+                if( isset($format_export) && $format_export == 'xls' ) {
+                    // $row = explode($separator,str_replace( '""', '', $lines));
+                    // remove header from row
+                    // array_splice($row, 0, count($headers));
+                    $excel->writeLine($lines_xls);
+                }
 
-                // remove header from row
-                // array_splice($row, 0, count($headers));
-
-                $excel->writeLine($lines_xls);
+                // on supprime le tableau courrant
                 unset($lines_xls);
 
 				// GFCommon::log_debug( "GFExport::start_export(): Lines: {$lines}" );
@@ -470,7 +484,10 @@ class GravityFormsAutomaticCSVExport {
 
 			GFExport::write_file( $lines, $export_id );
 
-            $excel->close();
+
+            if( isset($format_export) && $format_export == 'xls' ) {
+                $excel->close();
+            }
 
 			/*
 			BEGIN mods by Alex C

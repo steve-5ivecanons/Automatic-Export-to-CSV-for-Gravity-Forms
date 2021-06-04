@@ -88,6 +88,7 @@ class GFAutomaticCSVAddOn extends GFAddOn {
     }
 
 
+    // https://docs.gravityforms.com/gfaddon/
     public function form_settings_fields( $form ) {
         return array(
             array(
@@ -130,7 +131,7 @@ class GFAutomaticCSVAddOn extends GFAddOn {
                         )
                     ),
                     array(
-                        'label'   => esc_html__( 'CSV export frequency', 'csvexport' ),
+                        'label'   => esc_html__( 'Export frequency', 'csvexport' ),
                         'type'    => 'select',
                         'name'    => 'csv_export_frequency',
                         'tooltip' => esc_html__( 'This determines how frequently the export will be run and emailed to you.', 'csvexport' ),
@@ -150,30 +151,51 @@ class GFAutomaticCSVAddOn extends GFAddOn {
                             array(
                                 'label' => esc_html__( 'Monthly', 'csvexport' ),
                                 'value' => 'monthly'
+                            )
+                        )
+                    ),
+                    array(
+                        'type'          => 'radio',
+                        'name'          => 'format_export',
+                        'label'         => esc_html__( 'Choose the export Format CSV/XLS', 'csvexport' ),
+                        'default_value' => 'csv',
+                        'horizontal'    => true,
+                        'choices'       => array(
+                            array(
+                                'name'    => 'format_export',
+                                'tooltip' => esc_html__( 'Sent the CSV Format', 'csvexport' ),
+                                'label'   => esc_html__( 'Sent the CSV Format', 'csvexport' ),
+                                'value'   => 'csv'
                             ),
+                            array(
+                                'name'    => 'format_export',
+                                'tooltip' => esc_html__( 'Sent the XLS Format', 'csvexport' ),
+                                'label'   => esc_html__( 'Sent the XLS Format', 'csvexport' ),
+                                'value' => 'xls'
+                            )
                         )
                     ),
                     array(
                         'label' => esc_html__( 'Email Subject', 'csvexport' ),
                         'type' => 'text',
                         'name' => 'email_subject',
-                        'tooltip' => esc_html__( 'The csv will be sent with this subject', 'csvexport' ),
+                        'tooltip' => esc_html__( 'The e-mail will be sent with this subject', 'csvexport' ),
                         'class' => 'medium',
                         'placeholder' => 'Automatic Form Export'
                     ),
                     array(
                         'label' => esc_html__( 'E-mail Content', 'csvexport' ),
-                        'type' => 'text',
+                        'type' => 'textarea',
                         'name' => 'email_content',
-                        'tooltip' => esc_html__( 'The csv will be sent with this content e-mail', 'csvexport' ),
+                        'tooltip' => esc_html__( 'The export will be sent with this content e-mail', 'csvexport' ),
                         'class' => 'medium',
-                        'placeholder' => 'CSV export is attached to this message'
+                        'placeholder' => 'Export is attached to this message'
                     ),
                     array(
                         'label' => esc_html__( 'E-mail Address', 'csvexport' ),
                         'type' => 'text',
                         'name' => 'email_address',
-                        'tooltip' => esc_html__( 'The csv will be sent to this email address', 'csvexport' ),
+                        'tooltip' => esc_html__( 'The export will be sent to this email address', 'csvexport' ),
                         'class' => 'medium'
                     )
                 ),
