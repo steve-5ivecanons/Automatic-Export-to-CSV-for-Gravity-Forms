@@ -1,4 +1,4 @@
-![screenshot of gravity forms automatic export to csv](https://raw.githubusercontent.com/alexcavender/gravity-forms-automatic-export-to-csv/master/screenshot.png)
+![screenshot of gravity forms automatic export to csv](https://github.com/logicalway/Automatic-Export-to-CSV-for-Gravity-Forms/blob/master/screenshot.png)
 
 
 ##1. Requirements
