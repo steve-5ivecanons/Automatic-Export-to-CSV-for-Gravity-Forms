@@ -1,13 +1,19 @@
 <?php
 
-GFForms::include_addon_framework();
+
+if ( class_exists( 'GFForms' ) ) {
+
+    GFForms::include_addon_framework();
+
+}
+
 
 class GFAutomaticCSVAddOn extends GFAddOn {
 
     protected $_version = GF_AUTOMATIC_CSV_VERSION;
     protected $_min_gravityforms_version = '2.0';
     protected $_slug = 'automatic_csv_export_for_gravity_forms';
-    protected $_path = 'gravityforms_automatic_csv_export/automatic_csv_export_for_gravity_forms.php';
+    protected $_path = 'gravityforms-automatic-csv-export/automatic_csv_export_for_gravity_forms.php';
     protected $_full_path = __FILE__;
     protected $_title = 'Automatic CSV Export for Gravity Forms Add-On';
     protected $_short_title = 'Automatic CSV Export';
@@ -95,12 +101,10 @@ class GFAutomaticCSVAddOn extends GFAddOn {
                         'choices' => array(
                             array(
                                 'label' => esc_html__( 'Enabled', 'csvexport' ),
-                                'name'  => 'enabled',
+                                'name'  => 'enabled'
                             ),
-                        ),
+                        )
                     ),
-
-
                     array(
                         'label'   => esc_html__( 'Search Criteria', 'csvexport' ),
                         'type'    => 'select',
@@ -109,23 +113,22 @@ class GFAutomaticCSVAddOn extends GFAddOn {
                         'choices' => array(
                             array(
                                 'label' => esc_html__( 'Previous Day', 'csvexport' ),
-                                'value'  => 'previous_day',
+                                'value'  => 'previous_day'
                             ),
                             array(
                                 'label' => esc_html__( 'Previous Week', 'csvexport' ),
-                                'value'  => 'previous_week',
+                                'value'  => 'previous_week'
                             ),
                             array(
                                 'label' => esc_html__( 'Previous Month', 'csvexport' ),
-                                'value'  => 'previous_month',
+                                'value'  => 'previous_month'
                             ),
                             array(
                                 'label' => esc_html__( 'Everything', 'csvexport' ),
-                                'value'  => 'all',
+                                'value'  => 'all'
                             ),
-                        ),
+                        )
                     ),
-
                     array(
                         'label'   => esc_html__( 'CSV export frequency', 'csvexport' ),
                         'type'    => 'select',
@@ -134,29 +137,45 @@ class GFAutomaticCSVAddOn extends GFAddOn {
                         'choices' => array(
                             array(
                                 'label' => esc_html__( 'Hourly', 'csvexport' ),
-                                'value' => 'hourly',
+                                'value' => 'hourly'
                             ),
                             array(
                                 'label' => esc_html__( 'Daily', 'csvexport' ),
-                                'value' => 'daily',
+                                'value' => 'daily'
                             ),
                             array(
                                 'label' => esc_html__( 'Weekly', 'csvexport' ),
-                                'value' => 'weekly',
+                                'value' => 'weekly'
                             ),
                             array(
                                 'label' => esc_html__( 'Monthly', 'csvexport' ),
-                                'value' => 'monthly',
+                                'value' => 'monthly'
                             ),
-                        ),
+                        )
                     ),
                     array(
-                        'label'             => esc_html__( 'Email Address', 'csvexport' ),
-                        'type'              => 'text',
-                        'name'              => 'email_address',
-                        'tooltip'           => esc_html__( 'The csv will be sent to this email address', 'csvexport' ),
-                        'class'             => 'medium',
+                        'label' => esc_html__( 'Email Subject', 'csvexport' ),
+                        'type' => 'text',
+                        'name' => 'email_subject',
+                        'tooltip' => esc_html__( 'The csv will be sent with this subject', 'csvexport' ),
+                        'class' => 'medium',
+                        'placeholder' => 'Automatic Form Export'
                     ),
+                    array(
+                        'label' => esc_html__( 'E-mail Content', 'csvexport' ),
+                        'type' => 'text',
+                        'name' => 'email_content',
+                        'tooltip' => esc_html__( 'The csv will be sent with this content e-mail', 'csvexport' ),
+                        'class' => 'medium',
+                        'placeholder' => 'CSV export is attached to this message'
+                    ),
+                    array(
+                        'label' => esc_html__( 'E-mail Address', 'csvexport' ),
+                        'type' => 'text',
+                        'name' => 'email_address',
+                        'tooltip' => esc_html__( 'The csv will be sent to this email address', 'csvexport' ),
+                        'class' => 'medium'
+                    )
                 ),
             ),
         );
