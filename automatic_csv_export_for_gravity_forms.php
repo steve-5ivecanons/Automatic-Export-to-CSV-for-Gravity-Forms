@@ -31,8 +31,16 @@ class GravityFormsAutomaticCSVExport {
 			global $wpdb;
 			$prefix = $wpdb->prefix;
 
-			// https://docs.gravityforms.com/database-storage-structure-reference/#changes-from-gravity-forms-2-2
-			$forms = $wpdb->get_results( "SELECT * FROM " . $prefix . "gf_form_meta" );
+            $table_name = $prefix . "gf_form_meta";
+
+            // https://docs.gravityforms.com/database-storage-structure-reference/#changes-from-gravity-forms-2-2
+            // Check if Table exists in Database
+            if ( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name ) {
+
+                $forms = $wpdb->get_results( "SELECT * FROM " . $prefix . "gf_form_meta" );
+            } else {
+                $forms = $wpdb->get_results( "SELECT * FROM " . $prefix . "rg_form_meta" );
+            }
 
 			foreach ( $forms as $form ) {
 				$form_id = $form->form_id;
