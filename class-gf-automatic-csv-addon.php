@@ -155,6 +155,20 @@ class GFAutomaticCSVAddOn extends GFAddOn {
                         )
                     ),
                     array(
+                        'name'     => 'filter_by',
+                        'label'    => esc_html__( 'Field To Filter By', 'csvexport' ),
+                        'type'     => 'field_select',
+                        'required' => false,
+                        'tooltip'  => '<h6>' . esc_html__( 'Field To Filter By', 'csvexport' ) . '</h6>' . esc_html__( 'Select which Gravity Form field you want to filter export by.', 'csvexport' )
+                    ),
+                    array(
+                        'label' => esc_html__( 'Filter Value', 'csvexport' ),
+                        'type' => 'text',
+                        'name' => 'filter_value',
+                        'tooltip' => esc_html__( 'The value of the filter', 'csvexport' ),
+                        'class' => 'medium'
+                    ),                    
+                    array(
                         'type'          => 'radio',
                         'name'          => 'format_export',
                         'label'         => esc_html__( 'Choose the export Format CSV/XLS', 'csvexport' ),
@@ -184,7 +198,7 @@ class GFAutomaticCSVAddOn extends GFAddOn {
                         'placeholder' => 'Automatic Form Export'
                     ),
                     array(
-                        'label' => esc_html__( 'E-mail Content', 'csvexport' ),
+                        'label' => esc_html__( 'Email Content', 'csvexport' ),
                         'type' => 'textarea',
                         'name' => 'email_content',
                         'tooltip' => esc_html__( 'The export will be sent with this content e-mail', 'csvexport' ),
@@ -192,10 +206,10 @@ class GFAutomaticCSVAddOn extends GFAddOn {
                         'placeholder' => 'Export is attached to this message'
                     ),
                     array(
-                        'label' => esc_html__( 'E-mail Address', 'csvexport' ),
+                        'label' => esc_html__( 'Email Address', 'csvexport' ),
                         'type' => 'text',
                         'name' => 'email_address',
-                        'tooltip' => esc_html__( 'The export will be sent to this email address', 'csvexport' ),
+                        'tooltip' => esc_html__( 'Comma seprated list of email address to send the export to', 'csvexport' ),
                         'class' => 'medium'
                     )
                 ),
