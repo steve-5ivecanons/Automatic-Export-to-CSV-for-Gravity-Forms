@@ -205,6 +205,13 @@ class GravityFormsAutomaticCSVExport {
 		$_POST['export_date_start'] = $search_criteria['start_date'];
 		$_POST['export_date_end']   = $search_criteria['end_date'];
 
+		if ($form['automatic_csv_export_for_gravity_forms']['filter_by'] != ''){
+			$_POST['f'] = array($form['automatic_csv_export_for_gravity_forms']['filter_by']);
+			$_POST['v'] = array($form['automatic_csv_export_for_gravity_forms']['filter_value']);
+			$_POST['o'] = array('is');
+			$_POST['mode'] = 'all';
+		}
+
 		$export = self::start_automated_export( $form, $offset = 0, $form_id . '-' . date('Y-m-d-giA') );
 
 		$upload_dir = wp_upload_dir();
@@ -311,6 +318,7 @@ class GravityFormsAutomaticCSVExport {
 		$start_date = empty( $_POST['export_date_start'] ) ? '' : self::get_gmt_date( $_POST['export_date_start'] . ' 00:00:00' );
 		$end_date   = empty( $_POST['export_date_end'] ) ? '' : self::get_gmt_date( $_POST['export_date_end'] . ' 23:59:59' );
 
+		GFCommon::log_debug( "GFExport::start_export(): POST: " . print_r($_POST, true) );
 		$search_criteria['status']        = 'active';
 		$search_criteria['field_filters'] = GFCommon::get_field_filters_from_post( $form );
 		if ( ! empty( $start_date ) ) {
